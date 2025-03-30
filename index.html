@@ -71,6 +71,63 @@
         .nav-item.inactive {
             @apply text-gray-400;
         }
+
+        .category-tabs {
+            @apply flex overflow-x-auto whitespace-nowrap py-2 mb-4 -mx-4 px-4;
+            scrollbar-width: none;
+        }
+        
+        .category-tabs::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .category-tab {
+            @apply px-4 py-2 rounded-full mr-2 text-sm transition-colors;
+        }
+        
+        .category-tab.active {
+            @apply bg-blue-600 text-white;
+        }
+        
+        .category-tab.inactive {
+            @apply bg-gray-100 text-gray-600;
+        }
+
+        .clothes-grid {
+            @apply grid grid-cols-2 gap-4;
+        }
+
+        .clothes-item {
+            @apply relative rounded-lg overflow-hidden bg-white;
+        }
+
+        .clothes-item img {
+            @apply w-full h-48 object-cover;
+        }
+
+        .clothes-info {
+            @apply p-2 border-t border-gray-100;
+        }
+
+        .clothes-name {
+            @apply text-sm font-medium;
+        }
+
+        .clothes-tags {
+            @apply flex flex-wrap gap-1 mt-1;
+        }
+
+        .clothes-tag {
+            @apply text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-600;
+        }
+
+        .selection-indicator {
+            @apply absolute top-2 right-2 w-6 h-6 rounded-full bg-white shadow-md flex items-center justify-center transform transition-transform;
+        }
+
+        .clothes-item.selected .selection-indicator {
+            @apply bg-blue-600 text-white;
+        }
     </style>
 </head>
 <body>
@@ -110,29 +167,100 @@
     <!-- 选择服装页面 -->
     <div class="page" id="select-clothes">
         <div class="card m-4">
-            <div class="flex items-center mb-6">
-                <i class="fas fa-arrow-left text-xl cursor-pointer"></i>
-                <h2 class="text-xl font-bold ml-4">选择服装</h2>
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center">
+                    <i class="fas fa-arrow-left text-xl cursor-pointer"></i>
+                    <h2 class="text-xl font-bold ml-4">选择服装</h2>
+                </div>
+                <button class="btn-primary px-4 py-2 text-sm" onclick="showPage('result')">
+                    下一步 <i class="fas fa-arrow-right ml-2"></i>
+                </button>
             </div>
-            <div class="grid grid-cols-2 gap-4">
-                <div class="relative group">
-                    <img src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3" 
-                         class="w-full h-48 object-cover rounded-lg" alt="服装1">
-                    <div class="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button class="bg-white p-2 rounded-full shadow-md">
-                            <i class="fas fa-check text-blue-600"></i>
-                        </button>
+
+            <!-- 服装分类标签 -->
+            <div class="category-tabs">
+                <button class="category-tab active">全部</button>
+                <button class="category-tab inactive">上衣</button>
+                <button class="category-tab inactive">裤装</button>
+                <button class="category-tab inactive">裙装</button>
+                <button class="category-tab inactive">外套</button>
+                <button class="category-tab inactive">运动</button>
+                <button class="category-tab inactive">商务</button>
+                <button class="category-tab inactive">休闲</button>
+            </div>
+
+            <!-- 服装网格 -->
+            <div class="clothes-grid">
+                <!-- 服装项目1 -->
+                <div class="clothes-item group" onclick="toggleClothesSelection(this)">
+                    <img src="https://images.unsplash.com/photo-1434389677669-e08b4cac3105" 
+                         alt="休闲白色T恤">
+                    <div class="clothes-info">
+                        <div class="clothes-name">休闲白色T恤</div>
+                        <div class="clothes-tags">
+                            <span class="clothes-tag">休闲</span>
+                            <span class="clothes-tag">夏季</span>
+                        </div>
+                    </div>
+                    <div class="selection-indicator">
+                        <i class="fas fa-check"></i>
                     </div>
                 </div>
-                <div class="relative group">
-                    <img src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3" 
-                         class="w-full h-48 object-cover rounded-lg" alt="服装2">
-                    <div class="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button class="bg-white p-2 rounded-full shadow-md">
-                            <i class="fas fa-check text-blue-600"></i>
-                        </button>
+
+                <!-- 服装项目2 -->
+                <div class="clothes-item group" onclick="toggleClothesSelection(this)">
+                    <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5" 
+                         alt="黑色西装外套">
+                    <div class="clothes-info">
+                        <div class="clothes-name">黑色西装外套</div>
+                        <div class="clothes-tags">
+                            <span class="clothes-tag">商务</span>
+                            <span class="clothes-tag">正装</span>
+                        </div>
+                    </div>
+                    <div class="selection-indicator">
+                        <i class="fas fa-check"></i>
                     </div>
                 </div>
+
+                <!-- 服装项目3 -->
+                <div class="clothes-item group" onclick="toggleClothesSelection(this)">
+                    <img src="https://images.unsplash.com/photo-1475180098004-ca77a66827be" 
+                         alt="牛仔外套">
+                    <div class="clothes-info">
+                        <div class="clothes-name">牛仔外套</div>
+                        <div class="clothes-tags">
+                            <span class="clothes-tag">休闲</span>
+                            <span class="clothes-tag">百搭</span>
+                        </div>
+                    </div>
+                    <div class="selection-indicator">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+
+                <!-- 服装项目4 -->
+                <div class="clothes-item group" onclick="toggleClothesSelection(this)">
+                    <img src="https://images.unsplash.com/photo-1550639525-c97d455acf70" 
+                         alt="运动套装">
+                    <div class="clothes-info">
+                        <div class="clothes-name">运动套装</div>
+                        <div class="clothes-tags">
+                            <span class="clothes-tag">运动</span>
+                            <span class="clothes-tag">舒适</span>
+                        </div>
+                    </div>
+                    <div class="selection-indicator">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 筛选器按钮 -->
+            <div class="fixed bottom-20 right-4">
+                <button class="bg-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center">
+                    <i class="fas fa-sliders-h text-gray-600"></i>
+                </button>
             </div>
         </div>
     </div>
@@ -185,6 +313,7 @@
             constructor() {
                 this.pages = document.querySelectorAll('.page');
                 this.currentPage = 'home';
+                this.selectedClothes = new Set();
                 this.init();
             }
 
@@ -257,11 +386,48 @@
                 event.currentTarget.classList.remove('inactive');
                 event.currentTarget.classList.add('active');
             }
+
+            /**
+             * 切换服装选择状态
+             * @param {HTMLElement} element - 服装项目元素
+             */
+            toggleClothesSelection(element) {
+                element.classList.toggle('selected');
+                const clothesId = element.dataset.id;
+                if (this.selectedClothes.has(clothesId)) {
+                    this.selectedClothes.delete(clothesId);
+                } else {
+                    this.selectedClothes.add(clothesId);
+                }
+            }
+
+            /**
+             * 切换分类标签
+             * @param {HTMLElement} element - 分类标签元素
+             */
+            toggleCategoryTab(element) {
+                document.querySelectorAll('.category-tab').forEach(tab => {
+                    tab.classList.remove('active');
+                    tab.classList.add('inactive');
+                });
+                element.classList.remove('inactive');
+                element.classList.add('active');
+            }
         }
 
         // 初始化页面管理器
-        document.addEventListener('DOMContentLoaded', () => {
-            new PageManager();
+        const pageManager = new PageManager();
+
+        // 服装选择处理函数
+        function toggleClothesSelection(element) {
+            pageManager.toggleClothesSelection(element);
+        }
+
+        // 分类标签点击处理
+        document.querySelectorAll('.category-tab').forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                pageManager.toggleCategoryTab(e.currentTarget);
+            });
         });
     </script>
 </body>
