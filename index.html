@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI服装换装 - 智能穿搭助手</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- 自定义样式 -->
+    <style>
+        :root {
+            --primary-color: #3B82F6;
+            --secondary-color: #1E40AF;
+            --background-color: #F3F4F6;
+            --text-color: #1F2937;
+            --border-color: #E5E7EB;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            max-width: 375px;
+            margin: 0 auto;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding-bottom: 64px; /* 为底部导航栏留出空间 */
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        .btn-primary {
+            @apply bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors;
+        }
+
+        .btn-secondary {
+            @apply bg-white text-blue-600 py-3 rounded-lg font-medium border border-blue-600 hover:bg-blue-50 transition-colors;
+        }
+
+        .card {
+            @apply bg-white rounded-lg shadow-sm p-4;
+        }
+
+        .nav-item {
+            @apply text-center transition-colors;
+        }
+
+        .nav-item.active {
+            @apply text-blue-600;
+        }
+
+        .nav-item.inactive {
+            @apply text-gray-400;
+        }
+    </style>
+</head>
+<body>
+    <!-- 主页面 -->
+    <div class="page active" id="home">
+        <div class="card m-4">
+            <h1 class="text-2xl font-bold text-center mb-6">AI服装换装</h1>
+            <div class="relative">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330" 
+                     class="w-full h-96 object-cover rounded-lg" alt="模特展示">
+                <div class="absolute bottom-4 left-4 right-4">
+                    <button class="btn-primary w-full">
+                        开始换装
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 上传照片页面 -->
+    <div class="page" id="upload">
+        <div class="card m-4">
+            <div class="flex items-center mb-6">
+                <i class="fas fa-arrow-left text-xl cursor-pointer"></i>
+                <h2 class="text-xl font-bold ml-4">上传照片</h2>
+            </div>
+            <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                <i class="fas fa-camera text-4xl text-gray-400 mb-4"></i>
+                <p class="text-gray-600 mb-4">点击上传照片或使用相机拍摄</p>
+                <button class="btn-primary px-6">
+                    选择照片
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 选择服装页面 -->
+    <div class="page" id="select-clothes">
+        <div class="card m-4">
+            <div class="flex items-center mb-6">
+                <i class="fas fa-arrow-left text-xl cursor-pointer"></i>
+                <h2 class="text-xl font-bold ml-4">选择服装</h2>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="relative group">
+                    <img src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3" 
+                         class="w-full h-48 object-cover rounded-lg" alt="服装1">
+                    <div class="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button class="bg-white p-2 rounded-full shadow-md">
+                            <i class="fas fa-check text-blue-600"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="relative group">
+                    <img src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3" 
+                         class="w-full h-48 object-cover rounded-lg" alt="服装2">
+                    <div class="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button class="bg-white p-2 rounded-full shadow-md">
+                            <i class="fas fa-check text-blue-600"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 生成结果页面 -->
+    <div class="page" id="result">
+        <div class="card m-4">
+            <div class="flex items-center mb-6">
+                <i class="fas fa-arrow-left text-xl cursor-pointer"></i>
+                <h2 class="text-xl font-bold ml-4">生成结果</h2>
+            </div>
+            <div class="relative">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330" 
+                     class="w-full h-96 object-cover rounded-lg" alt="生成结果">
+                <div class="absolute bottom-4 left-4 right-4 flex gap-4">
+                    <button class="btn-secondary flex-1">
+                        重新生成
+                    </button>
+                    <button class="btn-primary flex-1">
+                        保存
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航栏 -->
+    <div class="nav-bar">
+        <div class="flex justify-around p-4">
+            <div class="nav-item active">
+                <i class="fas fa-home"></i>
+                <p class="text-xs mt-1">首页</p>
+            </div>
+            <div class="nav-item inactive">
+                <i class="fas fa-tshirt"></i>
+                <p class="text-xs mt-1">服装</p>
+            </div>
+            <div class="nav-item inactive">
+                <i class="fas fa-user"></i>
+                <p class="text-xs mt-1">我的</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * 页面管理类
+         */
+        class PageManager {
+            constructor() {
+                this.pages = document.querySelectorAll('.page');
+                this.currentPage = 'home';
+                this.init();
+            }
+
+            /**
+             * 初始化页面管理器
+             */
+            init() {
+                this.bindEvents();
+            }
+
+            /**
+             * 绑定事件处理
+             */
+            bindEvents() {
+                // 首页"开始换装"按钮
+                document.querySelector('#home button').addEventListener('click', () => {
+                    this.showPage('upload');
+                });
+
+                // 返回按钮
+                document.querySelectorAll('.fa-arrow-left').forEach(arrow => {
+                    arrow.addEventListener('click', () => {
+                        this.handleBack();
+                    });
+                });
+
+                // 底部导航
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        const page = e.currentTarget.querySelector('i').className.split(' ')[2];
+                        this.handleNavClick(page);
+                    });
+                });
+            }
+
+            /**
+             * 显示指定页面
+             * @param {string} pageId - 页面ID
+             */
+            showPage(pageId) {
+                this.pages.forEach(page => {
+                    page.classList.remove('active');
+                });
+                document.getElementById(pageId).classList.add('active');
+                this.currentPage = pageId;
+            }
+
+            /**
+             * 处理返回按钮点击
+             */
+            handleBack() {
+                const pageMap = {
+                    'upload': 'home',
+                    'select-clothes': 'upload',
+                    'result': 'select-clothes'
+                };
+                this.showPage(pageMap[this.currentPage]);
+            }
+
+            /**
+             * 处理底部导航点击
+             * @param {string} icon - 图标类名
+             */
+            handleNavClick(icon) {
+                const navItems = document.querySelectorAll('.nav-item');
+                navItems.forEach(item => {
+                    item.classList.remove('active');
+                    item.classList.add('inactive');
+                });
+                event.currentTarget.classList.remove('inactive');
+                event.currentTarget.classList.add('active');
+            }
+        }
+
+        // 初始化页面管理器
+        document.addEventListener('DOMContentLoaded', () => {
+            new PageManager();
+        });
+    </script>
+</body>
+</html> 
