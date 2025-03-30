@@ -1,11 +1,8 @@
 {
-  "name": "login-app-prototype",
+  "name": "ai-clothes-change",
   "version": "1.0.0",
-  "description": "登录APP原型",
+  "description": "AI服装换装应用",
   "scripts": {
-    "start": "serve"
-  },
-  "dependencies": {
-    "serve": "^14.0.0"
+    "build": "mkdir -p dist && cp index.html dist/"
   }
 } 
