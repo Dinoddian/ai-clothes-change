@@ -1,0 +1,11 @@
+{
+  "name": "login-app-prototype",
+  "version": "1.0.0",
+  "description": "登录APP原型",
+  "scripts": {
+    "start": "serve"
+  },
+  "dependencies": {
+    "serve": "^14.0.0"
+  }
+} 
