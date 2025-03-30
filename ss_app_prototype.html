@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI服装换装 - 智能穿搭助手</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- 自定义样式 -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            max-width: 375px;
+            margin: 0 auto;
+            background-color: #f5f5f5;
+        }
+        .page {
+            display: none;
+            min-height: 100vh;
+        }
+        .page.active {
+            display: block;
+        }
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <!-- 主页面 -->
+    <div class="page active" id="home">
+        <div class="bg-white p-4">
+            <h1 class="text-2xl font-bold text-center mb-6">AI服装换装</h1>
+            <div class="relative">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330" 
+                     class="w-full h-96 object-cover rounded-lg" alt="模特展示">
+                <div class="absolute bottom-4 left-4 right-4">
+                    <button class="w-full bg-blue-600 text-white py-3 rounded-lg font-medium">
+                        开始换装
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 上传照片页面 -->
+    <div class="page" id="upload">
+        <div class="bg-white p-4">
+            <div class="flex items-center mb-6">
+                <i class="fas fa-arrow-left text-xl"></i>
+                <h2 class="text-xl font-bold ml-4">上传照片</h2>
+            </div>
+            <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                <i class="fas fa-camera text-4xl text-gray-400 mb-4"></i>
+                <p class="text-gray-600 mb-4">点击上传照片或使用相机拍摄</p>
+                <button class="bg-blue-600 text-white px-6 py-2 rounded-lg">
+                    选择照片
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 选择服装页面 -->
+    <div class="page" id="select-clothes">
+        <div class="bg-white p-4">
+            <div class="flex items-center mb-6">
+                <i class="fas fa-arrow-left text-xl"></i>
+                <h2 class="text-xl font-bold ml-4">选择服装</h2>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3" 
+                         class="w-full h-48 object-cover rounded-lg" alt="服装1">
+                    <div class="absolute bottom-2 right-2">
+                        <button class="bg-white p-2 rounded-full">
+                            <i class="fas fa-check text-blue-600"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- 更多服装选项 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 生成结果页面 -->
+    <div class="page" id="result">
+        <div class="bg-white p-4">
+            <div class="flex items-center mb-6">
+                <i class="fas fa-arrow-left text-xl"></i>
+                <h2 class="text-xl font-bold ml-4">生成结果</h2>
+            </div>
+            <div class="relative">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330" 
+                     class="w-full h-96 object-cover rounded-lg" alt="生成结果">
+                <div class="absolute bottom-4 left-4 right-4 flex gap-4">
+                    <button class="flex-1 bg-white text-blue-600 py-3 rounded-lg font-medium border border-blue-600">
+                        重新生成
+                    </button>
+                    <button class="flex-1 bg-blue-600 text-white py-3 rounded-lg font-medium">
+                        保存
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航栏 -->
+    <div class="nav-bar">
+        <div class="flex justify-around p-4">
+            <div class="text-center">
+                <i class="fas fa-home text-blue-600"></i>
+                <p class="text-xs mt-1">首页</p>
+            </div>
+            <div class="text-center">
+                <i class="fas fa-tshirt text-gray-400"></i>
+                <p class="text-xs mt-1">服装</p>
+            </div>
+            <div class="text-center">
+                <i class="fas fa-user text-gray-400"></i>
+                <p class="text-xs mt-1">我的</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 页面切换逻辑
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        // 添加交互事件
+        document.addEventListener('DOMContentLoaded', () => {
+            // 首页"开始换装"按钮
+            document.querySelector('#home button').addEventListener('click', () => {
+                showPage('upload');
+            });
+
+            // 返回按钮
+            document.querySelectorAll('.fa-arrow-left').forEach(arrow => {
+                arrow.addEventListener('click', () => {
+                    const currentPage = document.querySelector('.page.active').id;
+                    if (currentPage === 'upload') {
+                        showPage('home');
+                    } else if (currentPage === 'select-clothes') {
+                        showPage('upload');
+                    } else if (currentPage === 'result') {
+                        showPage('select-clothes');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
